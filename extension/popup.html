@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>URL Unshortener</title>
+    <style>
+      body {
+        width: 300px;
+        font-family: Arial, sans-serif;
+        padding: 10px;
+      }
+      input {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        font-size: 16px;
+      }
+      button {
+        width: 100%;
+        padding: 10px;
+        font-size: 16px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        cursor: pointer;
+      }
+      #result {
+        margin-top: 10px;
+        font-size: 14px;
+        color: #333;
+      }
+    </style>
+  </head>
+  <body>
+    <input type="text" id="url-input" placeholder="Enter shortened URL">
+    <button id="unshorten-btn">Unshorten URL</button>
+    <div id="result"></div>
+    <script src="popup.js"></script>
+  </body>
+</html>
