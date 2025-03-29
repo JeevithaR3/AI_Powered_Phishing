@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PhishShield</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@700&display=swap');
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #e2dddd;
+            height: 200vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Header */
+        .header {
+            background-color: white;
+            padding: 15px 20px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            margin-top: 20px;
+            width: calc(100% - 40px);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown button {
+            background: none;
+            color: #0d0d0e;
+            border: none;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            outline: none;
+        }
+
+        .dropdown button:hover {
+            background-color: #f1f1f1;
+            border-radius: 5px;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: white;
+            min-width: 150px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+            padding: 10px 0;
+            top: 100%;
+            left: 0;
+        }
+
+        .dropdown-content a {
+            color: #0d0d0e;
+            padding: 10px 15px;
+            text-decoration: none;
+            display: block;
+            font-size: 14px;
+        }
+
+        .dropdown-content a:hover {
+            background-color: #f1f1f1;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .get-button {
+            background-color: black;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 180px;
+            height: 50px;
+            font-weight: bold;
+        }
+        .get-button:hover {
+            background-color: #333;
+        }
+
+        /* Tagline */
+        .tagline {
+            text-align: center;
+            font-size: 80px;
+            font-weight: 700;
+            font-family: 'Poppins', sans-serif;
+            margin-top: 40px;
+            color: #0e0e66;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            background: linear-gradient(to right, #0e0e66, #ff5733);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+            width: 100%;
+        }
+
+        /* Box Container */
+        .box-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 50px;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .left-container, .right-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .box {
+            width: 300px;
+            height: 300px;
+            border-radius: 10px;
+            box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2);
+            font-weight: bold;
+            text-align: center;
+            font-size: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease-in-out;
+            cursor: pointer;
+        }
+
+        /* Box Colors */
+        .left-box {
+            background-color: rgb(91, 14, 115);
+            color: white;
+        }
+        .right-box {
+            background-color: rgb(146, 30, 59);
+            color: white;
+        }
+
+        /* Enlarging Effect for All Boxes */
+        .box:hover {
+            width: 350px;
+            height: 350px;
+            font-size: 20px;
+        }
+
+        /* Fish Image */
+        .phish-image {
+            display: block;
+            max-width: 500px;
+            border-radius: 10px;
+            position: relative;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        /* Center Button Section */
+        .center-button {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .signup-container {
+            border: 2px solid black;
+            padding: 150px;
+            border-radius: 10px;
+            text-align: center;
+            margin-top: 50px;
+            width: 1000px;
+            background-color: rgb(209, 166, 228);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .signup-container input {
+            width: 90%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 2px solid black;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        .signup-container button {
+            background-color: black;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            width: 100%;
+        }
+
+        .signup-container button:hover {
+            background-color: #333;
+        }
+
+        /* Social Media Footer */
+        .footer {
+            background-color:#e2dddd;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            width: 100%;
+        }
+
+        .icon-box {
+            width: 50px;
+            height: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #e2dddd;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            border: 2px solid black;
+            transition: transform 0.3s;
+        }
+
+        .icon-box img {
+            width: 30px;
+            height: 30px;
+        }
+
+        .icon-box:hover {
+            transform: scale(1.1);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.4);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+            width: 300px;
+        }
+
+        .modal-button {
+            background-color: #0e0e66;
+            color: white;
+            padding: 10px;
+            margin-top: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .modal-button:hover {
+            background-color: #333;
+        }
+
+        /* Close Button */
+        .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Modal styles */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Fixed position to cover the screen */
+    z-index: 1; /* Ensure it is above other content */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scrolling if content overflows */
+    background-color: rgba(0, 0, 0, 0.4); /* Semi-transparent black background */
+}
+
+/* Modal Content */
+.modal-content {
+    background-color: #d6d687;
+    margin: 15% auto; /* Center the modal content */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%; /* Set a default width */
+    max-width: 600px; /* Max width to prevent it from becoming too large */
+    border-radius: 8px; /* Optional rounded corners */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .tagline {
+                font-size: 50px;
+            }
+            .box-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .box {
+                width: 250px;
+                height: 250px;
+            }
+            .box:hover {
+                width: 300px;
+                height: 300px;
+            }
+        }
+        
+
+    </style>
+</head>
+<body>
+
+    <!-- Header -->
+    <div class="header">
+        <div class="header-left">
+            <h1>PhishShield</h1>
+            <div class="header-buttons">
+                <div class="dropdown">
+                    <button>Features ▼</button>
+                    <div class="dropdown-content">
+                        <a href="#">Real-Time Detection</a>
+                        <a href="#">URL Analysis</a>
+                        <a href="#">Attachment Scanning</a>
+                    </div>
+                </div>
+                <!-- Developer Dropdown -->
+<div class="dropdown">
+    <button>Developer ▼</button>
+    <div class="dropdown-content">
+        <a href="#">API Documentation</a>
+        <a href="#">Integration Guide</a>
+        <a href="https://github.com/JeevithaR3/AI_Powered_Phishing.git" target="_blank">GitHub Repository</a>
+    </div>
+</div>
+
+            </div>
+        </div>
+        <button class="get-button">Get PhishShield</button>
+    </div>
+
+    <!-- Tagline -->
+    <div class="tagline">Spot the scam... stop the hack</div>
+
+    <!-- Get PhishShield Button -->
+    <div class="center-button">
+        <button class="get-button">Get PhishShield</button>
+    </div>
+
+    <!-- Modal for Activate/Deactivate -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Find your shield as extension in your browser</h2>
+            <!-- <button class="modal-button" id="activateBtn">Reveal Link</button>
+            <button class="modal-button" id="deactivateBtn">Preview Email</button> -->
+        </div>
+    </div>
+
+    <!-- Box Section -->
+    <div class="box-container">
+        <div class="left-container">
+            <div class="box left-box">Stay safe online</div>
+            <div class="box left-box" style="background-color: rgb(14, 14, 61);">Protect your personal data</div>
+        </div>
+        <img src="fish.png" alt="PhishShield Logo" class="phish-image">
+        <div class="right-container">
+            <div class="box right-box">Don't get hooked!!</div>
+            <div class="box right-box" style="background-color: rgb(56, 134, 138);">AI powered detection</div>
+        </div>
+    </div>
+
+    <!-- Sign-Up Section -->
+    <div class="signup-container">
+        <h2>Sign Up to receive updates and announcements!!!!</h2>
+        <input type="email" placeholder="Enter your email" required>
+        <button>Sign Up</button>
+    </div>
+
+    <!-- Social Media Icons Footer -->
+    <div class="footer">
+        <div class="icon-box"><img src="https://cdn.pixabay.com/photo/2017/08/23/11/30/twitter-2672572_1280.jpg" alt="Twitter"></div>
+        <div class="icon-box"><img src="https://tse1.mm.bing.net/th?id=OIP.sV7tva-728oySeOUL0-vOwHaHa&pid=Api&P=0&h=180" alt="GitHub"></div>
+        <div class="icon-box"><img src="https://tse2.mm.bing.net/th?id=OIP.SL2Gf-U_ixigPGDa-r4JQwHaHa&pid=Api&P=0&h=180" alt="LinkedIn"></div>
+        <div class="icon-box"><img src="https://tse2.mm.bing.net/th?id=OIP.TdXbfe01gdovR6B98sQb_AHaHa&pid=Api&P=0&h=180" alt="YouTube"></div>
+        <div class="icon-box"><img src="https://tse1.mm.bing.net/th?id=OIP.JtMTLYolw3bqNo3gfDDXzgHaHa&pid=Api&P=0&h=180" alt="Instagram"></div>
+        <div class="icon-box"><img src="https://tse2.mm.bing.net/th?id=OIP.vmUiTafMFZiPic6NOWeKpQHaHa&pid=Api&P=0&h=180" alt="WhatsApp"></div>
+        <div class="icon-box"><img src="https://tse4.mm.bing.net/th?id=OIP.GfTLYC8SsgGuITqP1-cBEgHaHk&pid=Api&P=0&h=180" alt="Discord"></div>
+    </div>
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>&copy; 2025 PhishShield. All Rights Reserved.</p>
+        
+    </footer>
+
+    <!-- JavaScript for Hover Effect -->
+    <script>
+        const boxes = document.querySelectorAll(".box");
+
+        const hoverTexts = {
+            "Stay safe online": "Detect & block phishing scams in real time",
+            "Protect your personal data": "AI powered phishing detection at your fingertips ",
+            "Don't get hooked!!": "Stop phishing attacks before they reach you",
+            "AI powered detection": "Advanced AI for scam prevention scans emails,links and attachments for phishing threats in real time"
+        };
+
+        // Add hover effect to all boxes
+        boxes.forEach(box => {
+            const originalText = box.innerHTML;
+
+            if (hoverTexts[originalText]) {
+                box.addEventListener("mouseenter", () => {
+                    box.innerHTML = hoverTexts[originalText];
+                });
+
+                box.addEventListener("mouseleave", () => {
+                    box.innerHTML = originalText;
+                });
+            }
+        });
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const signUpContainer = document.querySelector(".signup-container");
+            const emailInput = signUpContainer.querySelector("input");
+            const signUpButton = signUpContainer.querySelector("button");
+            const signUpHeading = signUpContainer.querySelector("h2");
+    
+            signUpButton.addEventListener("click", function () {
+                // Hide the heading, input, and button
+                signUpHeading.style.display = "none";
+                emailInput.style.display = "none";
+                signUpButton.style.display = "none";
+    
+                // Create the thank-you message element
+                const thankYouMessage = document.createElement("p");
+                thankYouMessage.classList.add("thank-you-message");
+                thankYouMessage.textContent = "Thank you for signing up. Check your inbox for updates.";
+    
+                // Append the message inside the signup container
+                signUpContainer.appendChild(thankYouMessage);
+            });
+        });
+    </script>
+    
+</body>
+</html>
