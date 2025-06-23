@@ -1,0 +1,34 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+    width: 300px;
+    padding: 10px;
+  }
+  
+  h1 {
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  #message {
+    text-align: center;
+  }
+  
+  button {
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+  }
+  
+  button:hover {
+    background-color: #45a049;
+  }
+  
+  p {
+    font-size: 14px;
+    color: #333;
+  }
+  
